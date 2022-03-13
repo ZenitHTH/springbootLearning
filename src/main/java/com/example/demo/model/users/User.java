@@ -1,5 +1,9 @@
 package com.example.demo.model.users;
 
+import lombok.Cleanup;
+import org.hibernate.annotations.GenerationTime;
+import org.springframework.data.annotation.Id;
+
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.persistence.*;
@@ -11,33 +15,59 @@ import java.util.Base64;
 import java.util.UUID;
 
 @Entity
-@Table
+@Table(name="UsersData")
 public class User {
-    @Id
+    @javax.persistence.Id
+    @Column(name = "id", nullable = false)
+    private Long id;
+
     @SequenceGenerator(
-            name = "users_data",
+            name = "user_data",
             sequenceName = "user_data",
-            allocationSize =50
+            allocationSize =1
     )
 
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_data"
+            strategy = GenerationType.AUTO,
+            generator = "users_data"
     )
-    private UUID id;
+
+    @Column(name="UUID")
+    private UUID uuid;
+    @Column(name="Username")
     private String username;
+    @Column(name="hashPassword")
     private String hashPassword;
+    @Column(name="Salt")
     private byte[] salt;
+
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public User() {
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getUsername() {
@@ -57,8 +87,9 @@ public class User {
         this.hashPassword = Hashing(password);
     }
 
-    public User(UUID id, String username, String password) {
+    public User(long id,UUID uuid, String username, String password) {
         this.id = id;
+        this.uuid = uuid;
         this.username = username;
         if(this.salt == null)
         {
