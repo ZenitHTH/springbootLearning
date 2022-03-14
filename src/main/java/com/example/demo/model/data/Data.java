@@ -1,20 +1,55 @@
 package com.example.demo.model.data;
 
+import com.example.demo.model.users.User;
+
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
-public class Data
-{
-    private UUID id;
+@Entity
+@Table(name="DataTable")
+public class Data{
+
+    @javax.persistence.Id
+    @Column(name = "id",nullable = false)
+    private long id;
+    @SequenceGenerator(
+            name = "dataTable",
+            sequenceName = "dataTable",
+            allocationSize =50
+    )
+
+    @GeneratedValue(
+            strategy = GenerationType.AUTO,
+            generator = "dataTable"
+    )
+    @Column(name="UUID")
+    private UUID uuid;
+    @Column(name="Name")
     private String name;
-    private Birthday birthday;
+    @Column(name="BirtDay")
+    private LocalDate birthday;
+    @Column(name="Bio")
     private String bio;
 
-    public UUID getId() {
+    public Data() {
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -25,11 +60,11 @@ public class Data
         this.name = name;
     }
 
-    public Birthday getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Birthday birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -41,49 +76,11 @@ public class Data
         this.bio = bio;
     }
 
-    public Data(UUID id, String name, String _birthday, String bio) {
-        this.id = id;
+    public Data(Long id,UUID uuid, String name, LocalDate _birthday, String bio) {
+        this.uuid = uuid;
         this.name = name;
         this.bio = bio;
-        String[] dmy = _birthday.split("/");
-        int d= new Integer(dmy[0]),m= new Integer(dmy[1]),y=new Integer(dmy[2]);
-        this.birthday = new Birthday(d,m,y);
-    }
-}
-
-class Birthday
-{
-    private int day;
-    private int month;
-    private int year;
-
-    public int getDay() {
-        return day;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public int getMonth() {
-        return month;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public Birthday(int day, int month, int year) {
-        this.day = day;
-        this.month = month;
-        this.year = year;
+        this.birthday = _birthday;
+        this.id = id;
     }
 }

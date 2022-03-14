@@ -1,9 +1,5 @@
 package com.example.demo.model.users;
 
-import lombok.Cleanup;
-import org.hibernate.annotations.GenerationTime;
-import org.springframework.data.annotation.Id;
-
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.persistence.*;
@@ -24,7 +20,7 @@ public class User {
     @SequenceGenerator(
             name = "user_data",
             sequenceName = "user_data",
-            allocationSize =1
+            allocationSize =50
     )
 
     @GeneratedValue(
@@ -43,7 +39,7 @@ public class User {
 
 
     public byte[] getSalt() {
-        return salt;
+        return this.salt;
     }
 
     public void setSalt(byte[] salt) {
@@ -51,8 +47,8 @@ public class User {
     }
 
 
-    public Long getId() {
-        return id;
+    public Long getId(long id) {
+        return this.id;
     }
 
     public void setId(Long id) {
@@ -71,7 +67,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -79,7 +75,7 @@ public class User {
     }
 
     public String getHashPassword() {
-        return hashPassword;
+        return this.hashPassword;
     }
 
     public void setHashPassword(String password) {
