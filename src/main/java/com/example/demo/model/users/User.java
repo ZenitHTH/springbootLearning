@@ -15,6 +15,7 @@ import java.util.UUID;
 public class User {
     @javax.persistence.Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @SequenceGenerator(
@@ -46,7 +47,6 @@ public class User {
         this.salt = salt;
     }
 
-
     public Long getId(long id) {
         return this.id;
     }
@@ -55,8 +55,17 @@ public class User {
         this.id = id;
     }
 
-    public User() {
+    public User(String username, String password) {
+        this.uuid = UUID.randomUUID();
+        this.username = username;
+        if(this.salt == null)
+        {
+            this.salt = saltGenerator(16);
+        }
+        this.hashPassword = Hashing(password);
     }
+
+    public User(){};
 
     public UUID getUuid() {
         return uuid;
@@ -64,6 +73,11 @@ public class User {
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
+    }
+
+    public void setUuid()
+    {
+        this.uuid = UUID.randomUUID();
     }
 
     public String getUsername() {
@@ -129,6 +143,35 @@ public class User {
             spec.clearPassword();
         }
 
+    }
+
+}
+
+class Login
+{
+    private String username;
+    private String password;
+
+    public Login(String username,String password)
+    {
+        this.username=username;
+        this.password=password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
