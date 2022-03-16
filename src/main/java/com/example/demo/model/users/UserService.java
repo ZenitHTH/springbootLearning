@@ -1,11 +1,13 @@
 package com.example.demo.model.users;
 
+import com.example.demo.model.data.DataRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -32,9 +34,20 @@ public class UserService
             {
                 throw new IllegalStateException("user taken");
             }
-
         userRepository.save(new User(login.getUsername(), login.getPassword()));
+    }
 
+    public UUID deleteUser(@NotNull String username) throws IllegalStateException
+    {
+        User user = findUserbyUsername(username).get(0);
+        long id = user.getId();
+        boolean exists = userRepository.existsById(id);
+        if(!exists)
+        {
+            throw new IllegalStateException(username + " doesn't exist.");
+        }
+        userRepository.deleteById(id);
+        return user.getUuid();
     }
 
     @Transactional
@@ -48,7 +61,6 @@ public class UserService
     {
         return jdbcTemplate.query("Select * from users_data where username=\'"+username+"\'",new UserRowMapper());
     }
-
 
 }
 
