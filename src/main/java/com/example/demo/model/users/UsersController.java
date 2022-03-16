@@ -24,7 +24,7 @@ public class UsersController
     @PostMapping
     void registerNewUser(@RequestBody Login login)
     {
-        User user = new User(login.getUsername(), login.getPassword());
-        userService.addUser(user);
+
+        userService.addUser(login);
     }
 }
