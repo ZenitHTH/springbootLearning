@@ -12,11 +12,12 @@ public class Data{
 
     @javax.persistence.Id
     @Column(name = "id",nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @SequenceGenerator(
             name = "dataTable",
-            sequenceName = "dataTable",
-            allocationSize =50
+            sequenceName = "dataTable"
+
     )
 
     @GeneratedValue(
@@ -83,4 +84,12 @@ public class Data{
         this.birthday = _birthday;
         this.id = id;
     }
+
+    public Data(UUID uuid, String name, LocalDate _birthday, String bio) {
+        this.uuid = uuid;
+        this.name = name;
+        this.bio = bio;
+        this.birthday = _birthday;
+    }
 }
+
