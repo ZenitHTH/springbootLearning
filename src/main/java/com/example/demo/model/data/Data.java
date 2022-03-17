@@ -91,5 +91,16 @@ public class Data{
         this.bio = bio;
         this.birthday = _birthday;
     }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "id=" + id +
+                ", uuid=" + uuid +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                ", bio='" + bio + '\'' +
+                '}';
+    }
 }
 
