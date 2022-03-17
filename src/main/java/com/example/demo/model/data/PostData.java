@@ -3,19 +3,19 @@ package com.example.demo.model.data;
 import java.time.LocalDate;
 import java.util.UUID;
 
+
 public class PostData {
 
     private String username;
     private String bio;
-    private LocalDate birthday;
+    private String birthday;
 
-
-
-    public PostData(String username, String bio,LocalDate birthday) {
+    public PostData(String username, String bio,String birthday) {
         this.username = username;
         this.bio = bio;
         this.birthday = birthday;
     }
+
 
     public String getUsername() {
         return username;
@@ -33,12 +33,21 @@ public class PostData {
         this.bio = bio;
     }
 
-    public LocalDate getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
+
+    @Override
+    public String toString() {
+        return "PostData{" +
+                "username='" + username + '\'' +
+                ", bio='" + bio + '\'' +
+                ", birthday='" + birthday + '\'' +
+                '}';
+    }
 }
